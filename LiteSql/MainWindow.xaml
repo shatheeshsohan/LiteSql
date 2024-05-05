@@ -1,0 +1,16 @@
+﻿<Window x:Class="LiteSql.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LiteSql"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Label x:Name="connLabel" Content="DB ::\\" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="48" FontWeight="Bold"/>
+        <TextBox x:Name="connectString" Margin="63,15,98,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21" Text="E:\ProjectBasket\csharp\sqlite-sakila.db"/>
+        <Button x:Name="connectButton" Content="Connect" Margin="0,15,10,0" VerticalAlignment="Top" Height="21" HorizontalAlignment="Right" Width="82"/>
+        <Separator HorizontalAlignment="Left" Margin="0,41,0,0" VerticalAlignment="Top" Height="14" Width="810" Background="#FFA19F9F" Foreground="#FF4A3D3D"/>
+
+    </Grid>
+</Window>
