@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
+    <PackageReference Include="sqlite-net-sqlcipher" Version="1.9.172" />
   </ItemGroup>
 
 </Project>

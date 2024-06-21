@@ -5,10 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LiteSql.DB
+namespace LiteSql.Models
 {
-    interface IDatabaseConnection
+    public class TableNameData
     {
-        public SQLiteConnection getConnection();
+        [Column("name")]
+        public string Name
+        { get; set; }
     }
 }

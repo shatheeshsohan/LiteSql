@@ -8,18 +8,9 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Label x:Name="connLabel" Content="DB ::\\" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="48" FontWeight="Bold"/>
-        <TextBox x:Name="connectString" Margin="63,15,98,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21" Text="C:\Users\satrlk\AppData\Local\Packages\IFS.IFSAurenaNative10IBS_4zvhwksmf3w4m\LocalState\database_1.db"/>
+        <TextBox x:Name="connectStringTextField" Margin="63,15,98,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21" Text="D:\DownloadsFromChrome\database_1.db"/>
         <Button x:Name="connectButton" Content="Connect" Margin="0,15,10,0" VerticalAlignment="Top" Height="21" HorizontalAlignment="Right" Width="82" Click="connectButton_Click"/>
-        <ComboBox x:Name="tableComboBox" Margin="63,41,10,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
-            <ComboBox.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="-1"/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </ComboBox.RenderTransform>
-        </ComboBox>
+        <ComboBox x:Name="tableComboBox" Margin="63,41,10,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"></ComboBox>
         <Label x:Name="tableLabel" Content="TABLE" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Height="23" Width="48" FontWeight="Bold"/>
 
     </Grid>

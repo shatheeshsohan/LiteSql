@@ -1,70 +1,72 @@
 ﻿using LiteSql.DB;
-using System;
-using System.Data;
-using System.Data.SQLite;
-using System.Text;
+using LiteSql.Models;
+using LiteSql.Util;
+using SQLite;
+using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Media.Media3D;
 
 namespace LiteSql
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         MessageBoxButton connectMsgBoxButtons;
         MessageBoxImage connectMsgBoxicon;
+        MessageBoxImage connectMsgBoxErroricon;
+        private SQLiteConnection? conn = null;
+
         public MainWindow()
         {
             InitializeComponent();
+            UIInit();
         }
 
-        public void UIInit() {
+        private void UIInit() {
             connectMsgBoxButtons = MessageBoxButton.OK;
             connectMsgBoxicon = MessageBoxImage.Information;
+            connectMsgBoxErroricon = MessageBoxImage.Error;
         }
 
         private void connectButton_Click(object sender, RoutedEventArgs e)
         {
-            //SQLiteConnection conn = new SQLLiteDBConnection(connectString.Text).getConnection();
-            SQLiteConnection sqlite = new SQLiteConnection("Data Source=C:\\Users\\satrlk\\AppData\\Local\\Packages\\IFS.IFSAurenaNative10IBS_4zvhwksmf3w4m\\LocalState\\database_1.db");
-            sqlite.SetPassword("iAr4dTqA30LMZpSH1hlOspGcnAn77DUkmog1U9l5siA=+B^erH^Tsr@7$6szk+");
-            SQLiteDataAdapter ad;
-            DataTable dt = new DataTable();
-
             try
             {
-                SQLiteCommand cmd;
-                sqlite.Open();  //Initiate connection to the db
-                cmd = sqlite.CreateCommand();
-                cmd.CommandText = "SELECT name FROM sqlite_schema WHERE type ='table' AND name NOT LIKE 'sqlite_%'";  //set the passed query
-                ad = new SQLiteDataAdapter(cmd);
-                ad.Fill(dt); //fill the datasource
-
-                SQLiteDataReader sqlite_datareader;
-  
-
-                sqlite_datareader = cmd.ExecuteReader();
-                while (sqlite_datareader.Read())
+                if (conn != null && connectButton.Content.ToString() == Constant.DISCONNET)
                 {
-                    string myreader = sqlite_datareader.GetString(0);
-                    System.Diagnostics.Debug.WriteLine(myreader);
+                    connectButton.Background = Brushes.Transparent;
+                    connectButton.Content = Constant.CONNET;
+                    conn.Close();
+                    conn = null;
+                }
+                else if (conn == null)
+                {
+
+                    conn = new SQLiteCipherConnection(connectStringTextField.Text, "iAr4dTqA30LMZpSH1hlOspGcnAn77DUkmog1U9l5siA=+B^erH^Tsr@7$6szk+").getConnection(); ;
+                    string allTablequery = $"SELECT name FROM sqlite_schema WHERE type ='table' AND name NOT LIKE 'sqlite_%'";
+                    List<TableNameData> results = conn.Query<TableNameData>(allTablequery); ;
+
+                    List<string> sortedTableNames = results.OrderBy(r => r.Name)
+                    foreach (TableNameData data in results )
+                    {
+                        tableComboBox.Items.Add(data.Name);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Not connected : " + ex.Message, "DB Status", connectMsgBoxButtons, connectMsgBoxErroricon);
+            }
+            finally
+            {
+                if (conn != null && conn.Handle != null && connectButton.Content.ToString() == Constant.CONNET)
+                {
+                    //MessageBox.Show("Connected.", "DB Status", connectMsgBoxButtons, connectMsgBoxicon);
+                    connectButton.Background = Brushes.Red;
+                    connectButton.Content = Constant.DISCONNET;
                 }
             }
-            catch (SQLiteException ex)
-            {
-                //Add your exception code here.
-            }
-            sqlite.Close();
-            MessageBox.Show("Connected.", "DB Status", connectMsgBoxButtons, connectMsgBoxicon);
         }
     }
 }
