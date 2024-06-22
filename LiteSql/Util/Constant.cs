@@ -10,5 +10,6 @@ namespace LiteSql.Util
     {
         public static string DISCONNET = "Disconnect";
         public static string CONNET = "Connect";
+        public static string BASE_TABLE_SELECT = $"SELECT * FROM ";
     }
 }
