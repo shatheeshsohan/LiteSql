@@ -14,6 +14,7 @@ namespace LiteSql.Util
             {
                 columnNamesList.Add(SQLite3.ColumnName(stQuery, i));
             }
+            //CommonUtil.Move(columnNamesList, "row_id", colLenght);
             ResultList.Add(columnNamesList);
 
 
@@ -27,16 +28,16 @@ namespace LiteSql.Util
                     switch (columnType)
                     {
                         case "TEXT":
-                            rowDataList.Add(SQLite3.ColumnString(stQuery, i));
+                            rowDataList.Add(CommonUtil.NVL(SQLite3.ColumnString(stQuery, i), "NULL"));
                             break;
                         case "INTEGER":
-                            rowDataList.Add(SQLite3.ColumnInt(stQuery, i).ToString());
+                            rowDataList.Add(CommonUtil.NVL(SQLite3.ColumnInt(stQuery, i).ToString(),"NULL"));
                             break;
                         case "DOUBLE":
-                            rowDataList.Add(SQLite3.ColumnDouble(stQuery, i).ToString());
+                            rowDataList.Add(CommonUtil.NVL(SQLite3.ColumnDouble(stQuery, i).ToString(), "NULL"));
                             break;
-                        case null:
-                            rowDataList.Add(null);
+                        default:
+                            rowDataList.Add("NULL");
                             break;
                     }
                 }

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LiteSql"
         mc:Ignorable="d"
+        Style="{DynamicResource CustomWindowStyle}"
         Title="LiteSQL (alpha)" Height="450" Width="800" Icon="/icon.jpeg">
     <Grid>
         <Label x:Name="connLabel" Content="DB ::\\" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="48" FontWeight="Bold"/>
@@ -12,16 +13,12 @@
         <Button x:Name="connectButton" Content="Connect" Margin="0,15,10,0" VerticalAlignment="Top" Height="21" HorizontalAlignment="Right" Width="82" Click="connectButton_Click"/>
         <ComboBox x:Name="tableComboBox" Margin="63,41,10,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" SelectionChanged="tableComboBox_SelectionChanged"></ComboBox>
         <Label x:Name="tableLabel" Content="TABLE" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Height="23" Width="48" FontWeight="Bold"/>
-        <DataGrid x:Name="MainTable" Margin="0,95,0,0" />
-        <ToolBarTray Background="DarkSlateGray" Height="27" Margin="0,68,0,0" VerticalAlignment="Top">
-            <ToolBar Name="baseActionToolBar" Height="27" Margin="-3,0,0,0">
-                <ToolBar.Style>
-                    <Style/>
-                </ToolBar.Style>
-                <Button Background="LightSkyBlue" Content="Commit" Width="62"/>
-                <Button Background="LightSkyBlue" Content="Igonre" Width="62" />
-                <Button Background="LightSkyBlue" Content="Refresh" Width="62"/>
-            </ToolBar>
-        </ToolBarTray>
+        <DataGrid x:Name="mainTable" Margin="0,98,0,0"  CellEditEnding="mainTable_CellEditTriggered" />
+        <ToolBar x:Name="baseActionToolBar" Margin="-3,68,0,0" Height="30" VerticalAlignment="Top">
+            <Button x:Name="commitButton" Content="Commit" Width="62" Height="21"/>
+            <Button x:Name="ignoreButton" Content="Igonre" Width="62" Click="ignoreButton_Click" />
+            <Button x:Name="refreshButton" Content="Refresh" Width="62" Click="refreshButton_Click"/>
+        </ToolBar>
+
     </Grid>
 </Window>

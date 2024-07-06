@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
 
 namespace LiteSql.DB
 {
@@ -28,7 +23,6 @@ namespace LiteSql.DB
                 }
                 AddRow(dataGridSource, columnValues);
             }
-
             return dataGridSource;
         }
 
@@ -46,7 +40,6 @@ namespace LiteSql.DB
         private static void AddColumn<TData>(DataTable dataTable, string columnName, int columnIndex = -1)
         {
             DataColumn newColumn = new DataColumn(columnName, typeof(TData));
-
             dataTable.Columns.Add(newColumn);
             if (columnIndex > -1)
             {
