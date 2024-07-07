@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,9 +24,10 @@ namespace LiteSql.Models
             this.rowType = rowType;
         }
 
-        public void executeSQL()
+        public void executeSQL(SQLiteConnection conn)
         {
-            string formattedSQL = String.Format("UPDATE {0} SET {1} =  {2} WHERE objkey =  {3}", this.tableName, this.columnName, this.value, this.objkey);
+            string formattedSQL = String.Format("UPDATE {0} SET {1} = '{2}' WHERE obj_key = '{3}'", this.tableName, this.columnName, this.value, this.objkey);
+            conn.Execute(formattedSQL);
         }
     }
 }

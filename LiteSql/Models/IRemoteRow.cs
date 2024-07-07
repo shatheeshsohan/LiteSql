@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace LiteSql.Models
     {
         public string rowType { get; set; }
 
-        public void executeSQL();
+        public void executeSQL(SQLiteConnection conn);
 
     }
 }

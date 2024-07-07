@@ -13,13 +13,14 @@
         <Button x:Name="connectButton" Content="Connect" Margin="0,41,10,0" VerticalAlignment="Top" Height="21" HorizontalAlignment="Right" Width="82" Click="connectButton_Click"/>
         <ComboBox x:Name="tableComboBox" Margin="63,41,184,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" SelectionChanged="tableComboBox_SelectionChanged"></ComboBox>
         <Label x:Name="tableLabel" Content="TABLE" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Height="23" Width="48" FontWeight="Bold"/>
-        <DataGrid x:Name="mainTable" CanUserAddRows="False" Margin="0,98,0,0"  CellEditEnding="mainTable_CellEditTriggered" />
+        <DataGrid x:Name="mainTable" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn" CanUserAddRows="False" Margin="0,98,0,23"  CellEditEnding="mainTable_CellEditTriggered" />
         <ToolBar x:Name="baseActionToolBar" Margin="-3,68,0,0" Height="30" VerticalAlignment="Top">
-            <Button x:Name="commitButton" Content="Commit" Width="62" Height="21"/>
+            <Button x:Name="commitButton" Content="Commit" Width="62" Height="21" Click="commitButton_Click"/>
             <Button x:Name="ignoreButton" Content="Igonre" Width="62" Click="ignoreButton_Click" />
             <Button x:Name="refreshButton" Content="Refresh" Width="62" Click="refreshButton_Click"/>
         </ToolBar>
         <Button x:Name="preferenceButton" Content="Preference" Margin="0,41,97,0" VerticalAlignment="Top" Height="21" HorizontalAlignment="Right" Width="82" Click="preferenceButton_Click"/>
+        <StatusBar Height="23" VerticalAlignment="Bottom"/>
 
     </Grid>
 </Window>
