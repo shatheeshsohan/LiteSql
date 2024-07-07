@@ -18,9 +18,11 @@ namespace LiteSql
         MessageBoxButton connectMsgBoxButtons;
         MessageBoxImage connectMsgBoxicon;
         MessageBoxImage connectMsgBoxErroricon;
-        private SQLiteConnection? conn = null;
+        private SQLiteConnection? conn;
         private Queue<IRemoteRow> rowsQueue = new Queue<IRemoteRow>();
-    
+        private PreferenceData preferenceData = new PreferenceData();
+        private bool isDbConnected = false;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -37,17 +39,20 @@ namespace LiteSql
         {
             try
             {
-                if (conn != null && connectButton.Content.ToString() == Constants.DISCONNET)
+                if (conn != null && isDbConnected)
                 {
                     connectButton.Background = Brushes.Transparent;
                     connectButton.Content = Constants.CONNET;
                     conn.Close();
                     conn = null;
+                    this.tableComboBox.Items.Clear();
+                    this.mainTable.ItemsSource = null;  
+                    this.isDbConnected = false;
                 }
-                else if (conn == null)
+                else if (conn == null || !isDbConnected)
                 {
 
-                    conn = new SQLiteCipherConnection(connectStringTextField.Text, "iAr4dTqA30LMZpSH1hlOspGcnAn77DUkmog1U9l5siA=+B^erH^Tsr@7$6szk+").getConnection(); ;
+                    conn = new SQLiteCipherConnection(connectStringTextField.Text, preferenceData.decryptKey).getConnection(); ;
                     string allTablequery = $"SELECT name FROM sqlite_schema WHERE type ='table' AND name NOT LIKE 'sqlite_%'";
                     List<TableNameData> results = conn.Query<TableNameData>(allTablequery).OrderBy(r => r.Name).ToList(); ;
 
@@ -55,16 +60,19 @@ namespace LiteSql
                     {
                         tableComboBox.Items.Add(data.Name);
                     }
+                    this.isDbConnected = true;
                 }
 
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Not connected : " + ex.Message, "DB Status", connectMsgBoxButtons, connectMsgBoxErroricon);
+                this.isDbConnected = false;
+
             }
             finally
             {
-                if (conn != null && conn.Handle != null && connectButton.Content.ToString() == Constants.CONNET)
+                if (conn != null && conn.Handle != null && isDbConnected)
                 {
                     connectButton.Background = Brushes.Red;
                     connectButton.Content = Constants.DISCONNET;
@@ -74,12 +82,15 @@ namespace LiteSql
 
         private void tableComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            string query = $"SELECT * FROM " + tableComboBox.SelectedValue;
-            List<ColumnInfo>  columnInfos= conn.GetTableInfo((string)tableComboBox.SelectedValue).ToList();;
-            var ResultList = DBUtil.getResultList(conn, query);
-            this.mainTable.ItemsSource = ViewUtil.populateTable(ResultList, columnInfos.Count).DefaultView;
-            Constants.OBJKEY_INDEX = CommonUtil.getObjKeyIndex(ResultList[0]);
-            makeReadOnlyColumns();
+            if (tableComboBox.SelectedValue != null)
+            {
+                string query = $"SELECT * FROM " + tableComboBox.SelectedValue;
+                List<ColumnInfo> columnInfos = conn.GetTableInfo((string)tableComboBox.SelectedValue).ToList(); ;
+                var ResultList = DBUtil.getResultList(conn, query);
+                this.mainTable.ItemsSource = ViewUtil.populateTable(ResultList, columnInfos.Count).DefaultView;
+                Constants.OBJKEY_INDEX = CommonUtil.getObjKeyIndex(ResultList[0]);
+                makeReadOnlyColumns();
+            }
         }
         private void mainTable_CellEditTriggered(object sender, DataGridCellEditEndingEventArgs e)
         {
@@ -113,6 +124,13 @@ namespace LiteSql
             this.mainTable.ItemsSource = null;
             this.tableComboBox_SelectionChanged(sender, null);
             this.rowsQueue.Clear();
+        }
+
+        private void preferenceButton_Click(object sender, RoutedEventArgs e)
+        {
+            var preferenceWindow = new Preference();
+            preferenceWindow.ShowDialog();
+            preferenceData = preferenceWindow.preferenceData;
         }
     }
 }

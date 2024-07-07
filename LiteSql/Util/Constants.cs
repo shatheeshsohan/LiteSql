@@ -14,5 +14,7 @@ namespace LiteSql.Util
         public static string BASE_TABLE_SELECT = $"SELECT * FROM ";
         public static string ROW_UPDATE = "UPDATE";
         public static List<string> DB_BASE_VALUE_LIST = new List<string> { "row_id", "Bob", "Charlie" };
+        public static string DEFAULT_NO_DB_SELECTED_ITEM = "Please connect to a database";
+        public static string DEFAULT_DB_SELECTED_ITEM = "Please select a table";
     }
 }
