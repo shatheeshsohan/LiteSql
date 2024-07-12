@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LiteSql.Models
 {
-    public class PreferenceData
+    public class SettingsData
     {
         public string decryptKey { get; set; }
         public int cipherCompatibility { get; set; }
@@ -15,7 +15,7 @@ namespace LiteSql.Models
         public string cipherDefaultHmacAlgorithm { get; set; }
         public string cipherDefaultKdfAlgorithm { get; set; }
 
-        public PreferenceData()
+        public SettingsData()
         {
             this.decryptKey = "";
             this.cipherCompatibility = 3;
@@ -26,7 +26,7 @@ namespace LiteSql.Models
 
         }
 
-        public PreferenceData(string decryptKey, int cipherCompatibility, int cipherDefaultKdfIter, int cipherDdefaultPageSize, string cipherDefaultHmacAlgorithm, string cipherDefaultKdfAlgorithm)
+        public SettingsData(string decryptKey, int cipherCompatibility, int cipherDefaultKdfIter, int cipherDdefaultPageSize, string cipherDefaultHmacAlgorithm, string cipherDefaultKdfAlgorithm)
         {
             this.decryptKey = decryptKey;
             this.cipherCompatibility = cipherCompatibility;
@@ -34,6 +34,16 @@ namespace LiteSql.Models
             this.cipherDdefaultPageSize = cipherDdefaultPageSize;
             this.cipherDefaultHmacAlgorithm = cipherDefaultHmacAlgorithm;
             this.cipherDefaultKdfAlgorithm = cipherDefaultKdfAlgorithm;
+        }
+
+        public void setDefault()
+        {
+            this.decryptKey = "";
+            this.cipherCompatibility = 3;
+            this.cipherDefaultKdfIter = 64000;
+            this.cipherDdefaultPageSize = 1024;
+            this.cipherDefaultHmacAlgorithm = "HMAC_SHA1";
+            this.cipherDefaultKdfAlgorithm = "PBKDF2_HMAC_SHA1";
         }
     }
 }

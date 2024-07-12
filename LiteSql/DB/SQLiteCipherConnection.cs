@@ -1,37 +1,35 @@
-﻿using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LiteSql.Models;
+using SQLite;
 
 namespace LiteSql.DB
 {
     public class SQLiteCipherConnection : IDatabaseConnection
     {
         private string dbPath;
-        private string encryptKey;
         private SQLiteConnection? dbConnection = null;
+        private SettingsData? settingsData = null;
 
-        public SQLiteCipherConnection(string dbPath, string encryptKey) { 
+        public SQLiteCipherConnection(string dbPath, SettingsData settingsData) { 
             this.dbPath = dbPath;
-            this.encryptKey = encryptKey;
+            this.settingsData = settingsData;
         }
 
         public SQLiteConnection getConnection()
         {
-            SQLiteConnectionString options = new SQLiteConnectionString(dbPath, true, key: encryptKey,
-            postKeyAction: db =>
+            if (settingsData != null)
             {
-             db.Execute("PRAGMA cipher_compatibility    = 3;");
-             db.Execute("PRAGMA cipher_default_kdf_iter = 64000;");
-             db.Execute("PRAGMA cipher_default_page_size  = 1024;");
-             db.Execute("PRAGMA cipher_default_hmac_algorithm  = HMAC_SHA1;");
-             db.Execute("PRAGMA cipher_default_kdf_algorithm   = PBKDF2_HMAC_SHA1;");
-            });
+                SQLiteConnectionString options = new SQLiteConnectionString(dbPath, true, key: settingsData.decryptKey,
+                postKeyAction: db =>
+                {
+                    db.Execute("PRAGMA cipher_compatibility    = " + settingsData.cipherCompatibility + ";");
+                    db.Execute("PRAGMA cipher_default_kdf_iter = " + settingsData.cipherDefaultKdfIter + ";");
+                    db.Execute("PRAGMA cipher_default_page_size  = " + settingsData.cipherDdefaultPageSize + ";");
+                    db.Execute("PRAGMA cipher_default_hmac_algorithm  = " + settingsData.cipherDefaultHmacAlgorithm + ";");
+                    db.Execute("PRAGMA cipher_default_kdf_algorithm   = " + settingsData.cipherDefaultKdfAlgorithm + ";");
+                });
 
-            dbConnection = new SQLiteConnection(options);
-
+                dbConnection = new SQLiteConnection(options);
+            }
             return dbConnection;
         }
     }

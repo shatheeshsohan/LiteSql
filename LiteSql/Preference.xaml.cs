@@ -1,6 +1,7 @@
 ﻿using LiteSql.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,19 +21,30 @@ namespace LiteSql
     /// </summary>
     public partial class Preference : Window
     {
-        public PreferenceData preferenceData { get; set; }
+        public SettingsData settingsData { get; set; }
 
         public Preference()
         {
             InitializeComponent();
-            preferenceData = new PreferenceData();
+            settingsData = new SettingsData();
         }
-        private void prefSaveButton_Click(object sender, RoutedEventArgs e)
+        public void OnWindowClosing(object sender, CancelEventArgs e)
         {
-            preferenceData.decryptKey = decryptKeyText.Text;
-            if (MessageBox.Show("Preference data is saved. Do you want to close this window?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            try
             {
-                this.Close();
+                settingsData.decryptKey = decryptKeyText.Text;
+                settingsData.cipherCompatibility = Int32.Parse(cipherCompatibilityText.Text);
+                settingsData.cipherDefaultKdfIter = Int32.Parse(cipherDefaultKdfIterText.Text);
+                settingsData.cipherDdefaultPageSize = Int32.Parse(cipherDefaultPageSizeText.Text);
+                settingsData.cipherDdefaultPageSize = Int32.Parse(cipherDefaultPageSizeText.Text);
+                settingsData.cipherDefaultHmacAlgorithm = cipherDefaultHmacAlgorithmText.Text;
+                settingsData.cipherDefaultKdfAlgorithm = cipherDefaultKdfAlgorithmText.Text;
+                MessageBox.Show("Preferences are saved", "Information", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Please check format of relevent setting.", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+                settingsData.setDefault();
             }
         }
     }

@@ -10,7 +10,7 @@ namespace LiteSql.DB
             int rowCount = tableData.Count - 1;
             foreach (string columnInfo in tableData[0])
             {
-                AddColumn<string>(dataGridSource, columnInfo);
+                 AddColumn<string>(dataGridSource, columnInfo);
             }
 
             for (int rowIndex = 1; rowIndex <= rowCount; rowIndex++)

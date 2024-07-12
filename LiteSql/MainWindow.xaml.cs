@@ -20,7 +20,7 @@ namespace LiteSql
         MessageBoxImage connectMsgBoxErroricon;
         private SQLiteConnection? conn;
         private Queue<IRemoteRow> rowsQueue = new Queue<IRemoteRow>();
-        private PreferenceData preferenceData = new PreferenceData();
+        private SettingsData settingsData = new SettingsData();
         private bool isDbConnected = false;
 
         public MainWindow()
@@ -52,7 +52,7 @@ namespace LiteSql
                 else if (conn == null || !isDbConnected)
                 {
 
-                    conn = new SQLiteCipherConnection(connectStringTextField.Text, preferenceData.decryptKey).getConnection(); ;
+                    conn = new SQLiteCipherConnection(connectStringTextField.Text, settingsData).getConnection();
                     string allTablequery = $"SELECT name FROM sqlite_schema WHERE type ='table' AND name NOT LIKE 'sqlite_%'";
                     List<TableNameData> results = conn.Query<TableNameData>(allTablequery).OrderBy(r => r.Name).ToList(); ;
 
@@ -126,11 +126,11 @@ namespace LiteSql
             this.rowsQueue.Clear();
         }
 
-        private void preferenceButton_Click(object sender, RoutedEventArgs e)
+        private void settingsButton_Click(object sender, RoutedEventArgs e)
         {
             var preferenceWindow = new Preference();
             preferenceWindow.ShowDialog();
-            preferenceData = preferenceWindow.preferenceData;
+            settingsData = preferenceWindow.settingsData;
         }
 
         private void commitButton_Click(object sender, RoutedEventArgs e)
@@ -144,8 +144,6 @@ namespace LiteSql
         private void DataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             string header = e.Column.Header.ToString();
-
-            // Replace all underscores with two underscores, to prevent AccessKey handling
             e.Column.Header = header.Replace("_", "__");
         }
     }
