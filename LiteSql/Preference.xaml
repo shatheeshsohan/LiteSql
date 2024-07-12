@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:LiteSql"
         mc:Ignorable="d"
         Style="{DynamicResource CustomWindowStyle}"
-        Title="Preference" Height="183" Width="825" ResizeMode="CanMinimize" WindowStyle="ToolWindow">
+        Title="Preference" Height="262" Width="210" Width="821" ResizeMode="CanMinimize" WindowStyle="ToolWindow">
     <Grid>
         <Label x:Name="decryptLabel" Content="Decrypt Key" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="decryptKeyText" Text="iAr4dTqA30LMZpSH1hlOspGcnAn77DUkmog1U9l5siA=+B^erH^Tsr@7$6szk+" HorizontalAlignment="Left" Margin="99,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="714" Height="22"/>
