@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace LiteSql.Models
@@ -26,7 +27,8 @@ namespace LiteSql.Models
 
         public void executeSQL(SQLiteConnection conn)
         {
-            string formattedSQL = String.Format("UPDATE {0} SET {1} = '{2}' WHERE obj_key = '{3}'", this.tableName, this.columnName, this.value, this.objkey);
+            string formattedColumnName = Regex.Replace(this.columnName, "_+", "_");
+            string formattedSQL = String.Format("UPDATE {0} SET {1} = '{2}' WHERE obj_key = '{3}'", this.tableName, formattedColumnName, this.value, this.objkey);
             conn.Execute(formattedSQL);
         }
     }
