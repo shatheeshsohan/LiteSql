@@ -10,6 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove=".github\**" />
+    <EmbeddedResource Remove=".github\**" />
+    <None Remove=".github\**" />
+    <Page Remove=".github\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="icon.jpeg" />
     <None Remove="icon.png" />
     <None Remove="Resources\commit.png" />
@@ -30,10 +37,6 @@
     <Resource Include="Resources\commit.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include=".github\workflows\release.yml" />
   </ItemGroup>
 
 </Project>
