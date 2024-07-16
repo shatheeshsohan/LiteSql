@@ -20,7 +20,6 @@ jobs:
               with:
                 dotnet-version: 8.0.x
 
-            - run: dotnet restore ${{ env.PROJ_PATH}}
             - run: dotnet build ${{ env.PROJ_PATH}} -c Release  --no-restore
             - run: dotnet publish ${{ env.PROJ_PATH}} -c Release --self-contained -r win-x64 -p:PublishSingleFile=true --no-build
             
