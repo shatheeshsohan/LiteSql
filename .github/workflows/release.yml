@@ -2,8 +2,7 @@ name: "LiteSQL Release"
 
 on:
     push:
-        tags:
-            - "litesql/v*"
+        branches: [ "master" ]
 
 env:
     PROJ_PATH: LiteSql/LiteSql.csproj
@@ -35,6 +34,6 @@ jobs:
             - uses: csexton/release-asset-action@v2
               with:
                 github-token: ${{secrets.GITHUB_TOKEN}}
-                pattern: LiteSql/bin/Release/net8.0-windows/win-x64/*.exe
+                pattern: LiteSql/bin/Release/net8.0-windows/win-x64
                 release-url: ${{steps.create_release.outputs.upload_url}}
 
