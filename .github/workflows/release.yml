@@ -22,7 +22,7 @@ jobs:
 
             - run: dotnet build ${{ env.PROJ_PATH}} -c Release
             - run: dotnet publish ${{ env.PROJ_PATH}} -c Release -r win-x64
-            - run: Compress-Archive -Path LiteSql/bin/Release/net8.0-windows/win-x64/* -Destination test.zip
+            - run: Compress-Archive -Path LiteSql/bin/Release/net8.0-windows/win-x64/publish/* -Destination release-app.zip
             
             - name: Create Release
               uses: actions/create-release@v1
@@ -39,7 +39,7 @@ jobs:
                 GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
               with:
                 upload_url: ${{steps.create_release.outputs.upload_url}}
-                asset_path: test.zip
-                asset_name: test.zip
+                asset_path: release-app.zip
+                asset_name: release-app-v(alpha).zip
                 asset_content_type:  application/zip
 
