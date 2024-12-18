@@ -23,6 +23,7 @@
                     <Setter Property="Background" Value="DarkSlateGray"/>
                     <Setter Property="BorderThickness" Value="0,0,1,0"></Setter>
                     <Setter Property="BorderBrush" Value="LightBlue"/>
+                    <Setter Property="MinWidth" Value="150"/>
                 </Style>
             </DataGrid.ColumnHeaderStyle>
         </DataGrid>

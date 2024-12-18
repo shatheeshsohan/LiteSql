@@ -2732,7 +2732,7 @@
                             <Setter TargetName="border" Property="Background" Value="{DynamicResource DataGrid.CellItem.MouseOver.Background}"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource DataGrid.Row.Selected.Background}"/>
+                            <Setter TargetName="border" Property="Background" Value="#8ca9ad"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
